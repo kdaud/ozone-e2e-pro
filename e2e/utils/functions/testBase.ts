@@ -43,14 +43,17 @@ export class HomePage {
     patientFullName = patientName.firstName + ' ' + patientName.givenName;
 
     await this.page.getByRole('button', { name: 'Add Patient' }).click();
+    if (await this.page.getByTitle('close notification').isVisible()) {
+      await this.page.getByTitle('close notification').first().click();
+    }
     await this.page.getByLabel('នាមខ្លួន').clear();
     await this.page.getByLabel('នាមខ្លួន').fill(`${patientName.firstName}`);
     await this.page.getByLabel('នាមត្រកូល').clear();
     await this.page.getByLabel('នាមត្រកូល').fill(`${patientName.givenName}`);
     await this.page.locator('label').filter({ hasText: 'ប្រុស' }).locator('span').first().click();
-    await this.page.getByPlaceholder('dd/mm/YYYY').fill('13/06/2023');
+    await this.page.getByPlaceholder('dd/mm/YYYY').fill('17/08/2001');
     if (await this.page.getByTitle('close notification').isVisible()) {
-      await this.page.getByTitle('close notification').click();
+      await this.page.getByTitle('close notification').first().click();
     }
     await this.page.getByRole('button', { name: 'ចុះឈ្មោះអ្នកជំងឺ' }).click();
     await expect(this.page.getByText('បង្កើតការចុះឈ្មោះអ្នកជំងឺថ្មី')).toBeVisible();
