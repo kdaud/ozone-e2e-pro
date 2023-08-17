@@ -41,11 +41,10 @@ export class HomePage {
       firstName : `e2eTest${Math.floor(Math.random() * 1000)}`,
       givenName : `${(Math.random() + 1).toString(36).substring(2)}`
     }
-
     patientFullName = patientName.firstName + ' ' + patientName.givenName;
 
     await this.page.getByRole('button', { name: 'Add Patient' }).click();
-    delay(9000);
+    await expect(this.page.getByRole('button', { name: 'ចុះឈ្មោះអ្នកជំងឺ' })).toBeEnabled();
     if (await this.page.getByTitle('close notification').isVisible()) {
       await this.page.getByTitle('close notification').click();
     }
@@ -73,11 +72,10 @@ export class HomePage {
     await this.page.getByRole('link', { name: `${patientName.firstName + ' ' + patientName.givenName}` }).click();
     await this.page.getByRole('button', { name: 'ចាប់ផ្តើមការពិនិត្' }).click();
     await this.page.locator('label').filter({ hasText: 'មកពិនិត្យតាមដានជំងឺមិនឆ្លង' }).locator('span').first().click();
-    await this.page.locator('section').filter({ hasText: 'ប្រភេទធានារ៉ាប់រងសូមជ្រើសរើសជម្រើសណាមួយបង់ពេញថ្លៃបង់បញ្ចុះថ្លៃលើកលែងថ្លៃមូលនិធិស' }).getByRole('combobox').first().selectOption('c54ef47a-cbea-45e9-82c1-0ae0bcbcdaf9');
-    await this.page.locator('section').filter({ hasText: 'ប្រភេទធានារ៉ាប់រងសូមជ្រើសរើសជម្រើសណាមួយបង់ពេញថ្លៃបង់បញ្ចុះថ្លៃលើកលែងថ្លៃមូលនិធិស' }).getByRole('combobox').nth(1).selectOption('66cdc0a1-aa19-4676-af51-80f66d78d9eb');
-    await this.page.locator('section').filter({ hasText: 'ប្រភេទធានារ៉ាប់រងសូមជ្រើសរើសជម្រើសណាមួយបង់ពេញថ្លៃបង់បញ្ចុះថ្លៃលើកលែងថ្លៃមូលនិធិស' }).getByRole('combobox').nth(2).selectOption('7c53975f-be65-499d-b82c-abe01bcd6eca');
+    await this.page.locator('section').filter({ hasText: 'ប្រភេទធានារ៉ាប់រងសូមជ្រើសរើសជម្រើសណាមួយបង់ពេញថ្លៃបង់បញ្ចុះថ្លៃលើកលែងថ្លៃមូលនិធិស' }).getByRole('combobox').first().selectOption('3c2d3d22-afc1-48cf-a46f-0267182aa5e7');
+    await this.page.locator('section').filter({ hasText: 'ប្រភេទធានារ៉ាប់រងសូមជ្រើសរើសជម្រើសណាមួយបង់ពេញថ្លៃបង់បញ្ចុះថ្លៃលើកលែងថ្លៃមូលនិធិស' }).getByRole('combobox').nth(1).selectOption('9f3d41d0-1bcb-49bc-8022-f9c0295aa996');
     await this.page.locator('div').filter({ hasText: /^សូមជ្រើសរើសជម្រើសណាមួយតំបន់ កតំំបន់ ខតំបន់់ គ$/ }).getByRole('combobox').selectOption('3b592418-9f6a-4526-83c4-1b0e243938fe');
-    await this.page.locator('div').filter({ hasText: /^សូមជ្រើសរើសជម្រើសណាមួយបាទ\/ចាសទេ$/ }).getByRole('combobox').selectOption('1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    await this.page.locator('div').filter({ hasText: /^សូមជ្រើសរើសជម្រើសណាមួយបាទ\/ចាសទេ$/ }).getByRole('combobox').selectOption('1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
     await this.page.getByRole('button', { name: 'ចាប់ផ្តើមការមកពិនិត្យជំងឺ' }).click();
     await this.page.getByRole('button', { name: 'បិទ' }).click();
   }
