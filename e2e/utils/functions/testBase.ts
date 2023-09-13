@@ -69,6 +69,7 @@ export class HomePage {
   async startPatientVisit() {
     await this.page.getByTestId('searchPatientIcon').click();
     await this.page.getByTestId('patientSearchBar').fill(`${patientName.firstName + ' ' + patientName.givenName}`);
+    delay(3000);
     await this.page.getByRole('link', { name: `${patientName.firstName + ' ' + patientName.givenName}` }).click();
     await this.page.getByRole('button', { name: 'ចាប់ផ្តើមការពិនិត្' }).click();
     await this.page.locator('label').filter({ hasText: 'មកពិនិត្យតាមដានជំងឺមិនឆ្លង' }).locator('span').first().click();
