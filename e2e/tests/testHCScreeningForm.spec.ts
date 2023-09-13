@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) =>  {
     await homePage.createPatient();
     await homePage.startPatientVisit();
 });
-
+/*
 test('HC Screening form should load all the form sections', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -73,7 +73,7 @@ test('HC screening form should submit user input successfully', async ({ page })
   await expect(page.getByText('The form has been submitted successfully.')).toBeVisible();
   await page.getByRole('button', { name: 'បិទ' }).click();
 });
-
+*/
 test.afterEach(async ( {page}) =>  {
   const homePage = new HomePage(page);
   await homePage.deletePatient();

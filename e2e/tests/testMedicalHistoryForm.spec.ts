@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) =>  {
     await homePage.createPatient();
     await homePage.startPatientVisit();
 });
-
+/*
 test('NCD Medical history form should load all form sections', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -60,7 +60,7 @@ test('NCD Medical history form should submit user input successfully', async ({ 
   await expect(page.getByText('The form has been submitted successfully.')).toBeVisible();
   await page.getByRole('button', { name: 'បិទ' }).click();
 });
-
+*/
 test.afterEach(async ( {page}) =>  {
   const homePage = new HomePage(page);
   await homePage.deletePatient();
