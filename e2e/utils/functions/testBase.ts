@@ -42,7 +42,7 @@ export class HomePage {
   }
 
   async goToSENAITE() {
-    await this.page.goto('https://lims.ozone-qa.mekomsolutions.net/');
+    await this.page.goto('https://lims.demo.ozone-his.com/');
   }
 
   async createPatient() {
