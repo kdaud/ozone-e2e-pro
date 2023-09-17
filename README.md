@@ -24,7 +24,7 @@ Clone the project
 ```sh
 git clone https://github.com/kdaud/ozone-e2e-tests
 ```
-Navigate into the project
+Navigate to the project
 
 ```sh
 cd ozone-e2e-tests
