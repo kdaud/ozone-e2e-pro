@@ -30,10 +30,19 @@ export class HomePage {
     await this.page.getByRole('button', { name: 'Sign In' }).click();
     await this.page.locator('label').filter({ hasText: 'Inpatient Ward' }).locator('span').first().click();
     await this.page.getByRole('button', { name: 'Confirm' }).click();
+    delay(4000);
   }
 
   async goToSuperset() {
     await this.page.goto('https://analytics.ozone-qa.mekomsolutions.net/');
+  }
+
+  async goToKeycloak() {
+    await this.page.goto('https://auth.ozone-dev.mekomsolutions.net/');
+    await this.page.getByRole('link', { name: 'Administration Console' }).click();
+    await this.page.getByLabel('Username or email').fill('admin');
+    await this.page.getByLabel('Password').fill('password');
+    await this.page.getByRole('button', { name: 'Sign In' }).click();
   }
 
   async goToOdoo() {
@@ -354,4 +363,19 @@ export class HomePage {
     await this.page.getByRole('button', { name: 'Close' }).click();
     delay(5000);
   }
+
+  async addRole() {
+    await this.page.getByRole('link', { name: 'Add Role' }).click();
+    await this.page.locator('#role').fill(`${(Math.random() + 1).toString(36).substring(2)}`);
+    await this.page.locator('textarea[name="description"]').fill('Role for e2e test');
+    await this.page.getByLabel('Application: Administers System').check();
+    await this.page.getByLabel('Application: Edits Existing Encounters').check();
+    await this.page.getByLabel('Application: Has Super User Privileges').check();
+    await this.page.getByLabel('Application: Uses Patient Summary').check();
+    await this.page.getByLabel('Organizational: Registration Clerk').check();
+    delay(3000);
+    await this.page.getByRole('button', { name: 'Save Role' }).click();
+    await expect(this.page.getByText('Role saved')).toBeVisible();
+  }
+
 }
