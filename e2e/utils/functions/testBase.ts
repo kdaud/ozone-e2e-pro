@@ -33,16 +33,16 @@ export class HomePage {
   }
 
   async goToSuperset() {
-    await this.page.goto('https://analytics.ozone-qa.mekomsolutions.net/');
+    await this.page.goto('https://analytics.demo.ozone-his.com/');
   }
 
   async goToOdoo() {
-    await this.page.goto('https://erp.ozone-qa.mekomsolutions.net/');
+    await this.page.goto('https://erp.demo.ozone-his.com/');
     await this.page.getByRole('link', { name: 'Login with Single Sign-On' }).click();
   }
 
   async goToSENAITE() {
-    await this.page.goto('https://lims.ozone-qa.mekomsolutions.net/');
+    await this.page.goto('https://lims.demo.ozone-his.com/');
   }
 
   async createPatient() {
