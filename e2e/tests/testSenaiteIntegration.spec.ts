@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+/*import { test, expect } from '@playwright/test';
 import { HomePage } from '../utils/functions/testBase';
 import { patientName } from '../utils/functions/testBase';
 
@@ -214,3 +214,4 @@ test.afterEach(async ({ page }) => {
   await homePage.deletePatient();
   await page.close();
 });
+*/

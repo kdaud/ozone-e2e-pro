@@ -59,7 +59,7 @@ test('Editing patient details with a synced lab order edits the corresponding cu
   await homePage.updatePatientDetails();
 
   // verify
-  await page.goto("https://erp.ozone-qa.mekomsolutions.net/web");
+  await page.goto("https://erp.demo.ozone-his.com/web");
   await homePage.searchUpdatedCustomerInOdoo();
   const updatedCustomer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier");
@@ -109,7 +109,7 @@ test('Editing patient details with a synced drug order edits corresponding custo
   await homePage.updatePatientDetails();
 
   // verify
-  await page.goto("https://erp.ozone-qa.mekomsolutions.net/web");
+  await page.goto("https://erp.demo.ozone-his.com/web");
   await homePage.searchUpdatedCustomerInOdoo();
   const updatedCustomer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier");
@@ -136,12 +136,12 @@ test('Revising a synced drug order edits corresponding quotation line in Odoo', 
   await expect(drugOrderItem).toContainText('Twice daily - 5 Days');
 
   // replay
-  await page.goto('https://ozone-qa.mekomsolutions.net/openmrs/spa/home');
+  await page.goto('https://demo.ozone-his.com/openmrs/spa/home');
   await homePage.searchPatient(`${patientName.firstName + ' ' + patientName.givenName}`);
   await homePage.editDrugOrder();
 
   // verify
-  await page.goto('https://erp.ozone-qa.mekomsolutions.net/web');
+  await page.goto('https://erp.demo.ozone-his.com/web');
   await homePage.searchCustomerInOdoo();
   await page.getByRole('cell', { name: `${patientName.firstName + ' ' + patientName.givenName}` }).click();
   await expect(drugOrderItem).toContainText('8.0 Tablet');
@@ -171,7 +171,7 @@ test('Discontinuing a synced drug order cancels corresponding quotation line in 
   await homePage.discontinueDrugOrder();
 
   // verify
-  await page.goto('https://erp.ozone-qa.mekomsolutions.net/web');
+  await page.goto('https://erp.demo.ozone-his.com/web');
   await homePage.searchCustomerInOdoo();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
   await expect(quotation).toHaveText('Cancelled');
