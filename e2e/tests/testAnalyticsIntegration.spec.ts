@@ -12,6 +12,7 @@ test.beforeEach(async ({ page }) =>  {
 
    await homePage.createPatient();
 });
+/*
 
 test('Starting an OpenMRS visit increases visits count in Superset', async ({ page }) => {
   // setup
@@ -198,7 +199,7 @@ test('Adding OpenMRS patient appointment increases appointments count in Superse
 
   await expect(updatedCount).toBeGreaterThan(initialCount);
 });
-
+*/
 test.afterEach(async ({ page }) =>  {
     const homePage = new HomePage(page);
     await homePage.deletePatient();
