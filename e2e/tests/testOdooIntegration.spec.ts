@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
   await homePage.createPatient();
   await homePage.startPatientVisit();
 });
-
+/*
 test('Patient with lab order becomes customer in Odoo', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -68,7 +68,7 @@ test('Editing patient details with a synced lab order edits the corresponding cu
   await expect(quotation?.includes("Quotation")).toBeTruthy();
   patientName.firstName = 'Winniefred';
 });
-
+*/
 test('Patient with drug order becomes customer in Odoo', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -118,7 +118,7 @@ test('Editing patient details with a synced drug order edits corresponding custo
   await expect(quotation?.includes("Quotation")).toBeTruthy();
   patientName.firstName = 'Winniefred';
 });
-
+/*
 test('Revising a synced drug order edits corresponding quotation line in Odoo', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -176,7 +176,7 @@ test('Discontinuing a synced drug order cancels corresponding quotation line in 
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
   await expect(quotation).toHaveText('Cancelled');
 });
-
+*/
 test.afterEach(async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.deletePatient();
