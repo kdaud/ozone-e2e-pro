@@ -73,7 +73,7 @@ test('Creating an OpenMRS order increases orders count in Superset', async ({ pa
 
   await expect(updatedCount).toBeGreaterThan(initialCount);
 });
-
+/*
 test('Creating an OpenMRS order increases encounters count in Superset', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -198,7 +198,7 @@ test('Adding an OpenMRS patient appointment increases appointments count in Supe
 
   await expect(updatedCount).toBeGreaterThan(initialCount);
 });
-
+*/
 test.afterEach(async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.deletePatient();

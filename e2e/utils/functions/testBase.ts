@@ -206,8 +206,8 @@ export class HomePage {
   async goToLabOrderForm() {
     await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Tests')).toBeVisible();
+    await this.page.getByText('Laboratory Tests').click();
   }
 
   async saveLabOrder() {
