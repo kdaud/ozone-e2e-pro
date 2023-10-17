@@ -273,10 +273,11 @@ export class HomePage {
   async makeDrugOrder() {
     await this.page.getByRole('complementary').filter({ hasText: 'Medications' }).getByRole('button').first().click();
     await delay(3000);
-    await this.page.getByRole('button', { name: 'Add', exact: true }).nth(0).click();
-    await delay(2000);
+    // await this.page.getByRole('button', { name: 'Add', exact: true }).nth(0).click();
+    // await delay(2000);
     await this.page.getByPlaceholder('Search for a drug or orderset (e.g. "Aspirin")').fill('Aspirin 325mg');
-    await this.page.getByRole('button', { name: 'Order form' }).click();
+    await this.page.getByRole('listitem').filter({ hasText: 'Aspirin 325mg — 325mg — tabletImmediately add to basket' }).click();
+    // await this.page.getByRole('button', { name: 'Order form' }).click();
     await delay(4000);
     await this.page.getByPlaceholder('Dose').fill('4');
     await this.page.getByRole('button', { name: 'Open', exact: true }).nth(1).click();
@@ -300,6 +301,7 @@ export class HomePage {
   async editDrugOrder() {
     await this.page.getByRole('button', { name: 'Actions menu' }).click();
     await this.page.getByRole('menuitem', { name: 'Modify' }).click();
+    await this.page.locator('a').filter({ hasText: 'Modify' }).click();
     await delay(4000);
     await this.page.getByPlaceholder('Dose').clear();
     await this.page.getByPlaceholder('Dose').fill('8');
