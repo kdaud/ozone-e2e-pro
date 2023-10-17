@@ -161,7 +161,7 @@ export class HomePage {
   async addPatientAppointment() {
     await this.page.getByRole('link', { name: 'Appointments' }).click();
     await this.page.getByRole('button', { name: 'Add', exact: true }).click();
-    await this.page.getByLabel('Select a service').selectOption('General Medicine service');
+    await this.page.getByLabel('Select service').selectOption('General Medicine service');
     await this.page.getByLabel('Select the type of appointment').selectOption('WalkIn');
     await this.page.locator('#duration').clear();
     await this.page.locator('#duration').fill('40');
@@ -206,8 +206,8 @@ export class HomePage {
   async goToLabOrderForm() {
     await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Tests')).toBeVisible();
+    await this.page.getByText('Laboratory Tests').click();
   }
 
   async saveLabOrder() {
