@@ -11,7 +11,7 @@ export var randomRoleName = {
   roleName : `${(Math.random() + 1).toString(36).substring(2)}`
 }
 
-const delay = (mills) => {
+export const delay = (mills) => {
   let datetime1 = new Date().getTime();
   let datetime2 = datetime1 + mills;
   while(datetime1 < datetime2) {
@@ -183,6 +183,7 @@ export class HomePage {
 
   async selectDBSchema() {
     await this.page.getByRole('button', { name: 'triangle-down SQL Lab' }).click();
+    await delay(2000);
     await this.page.getByRole('link', { name: 'SQL Editor' }).click();
     await this.page.locator('div').filter({ hasText: /^Select schema or type schema name$/ }).nth(1).click();
     await this.page.getByTitle('public').getByText('public').click();
