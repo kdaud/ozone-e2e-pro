@@ -11,7 +11,7 @@ export var randomRoleName = {
   roleName : `${(Math.random() + 1).toString(36).substring(2)}`
 }
 
-const delay = (mills) => {
+export const delay = (mills) => {
   let datetime1 = new Date().getTime();
   let datetime2 = datetime1 + mills;
   while(datetime1 < datetime2) {
@@ -161,7 +161,7 @@ export class HomePage {
   async addPatientAppointment() {
     await this.page.getByRole('link', { name: 'Appointments' }).click();
     await this.page.getByRole('button', { name: 'Add', exact: true }).click();
-    await this.page.getByLabel('Select a service').selectOption('General Medicine service');
+    await this.page.getByLabel('Select service').selectOption('General Medicine service');
     await this.page.getByLabel('Select the type of appointment').selectOption('WalkIn');
     await this.page.locator('#duration').clear();
     await this.page.locator('#duration').fill('40');
@@ -186,8 +186,13 @@ export class HomePage {
     await this.page.getByRole('link', { name: 'SQL Editor' }).click();
     await this.page.locator('div').filter({ hasText: /^Select schema or type schema name$/ }).nth(1).click();
     await this.page.getByTitle('public').getByText('public').click();
+    await delay(3000);
+  }
+
+  async clearSQLEditor() {
     await this.page.getByRole('textbox').first().clear();
-    await delay(5000);
+    await this.page.getByRole('textbox').first().fill('');
+    await delay(3000);
   }
 
   async runSQLQuery() {
@@ -195,19 +200,11 @@ export class HomePage {
     await delay(5000);
   }
 
-  async returnToSQLEditor() {
-    await this.page.getByRole('button', { name: 'triangle-down SQL Lab' }).click();
-    await this.page.getByRole('link', { name: 'SQL Editor' }).click();
-    await this.page.getByRole('textbox').first().clear();
-    await this.page.getByRole('tab', { name: 'Query history' }).click();
-    await delay(5000);
-  }
-
   async goToLabOrderForm() {
     await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Tests')).toBeVisible();
+    await this.page.getByText('Laboratory Tests').click();
   }
 
   async saveLabOrder() {
