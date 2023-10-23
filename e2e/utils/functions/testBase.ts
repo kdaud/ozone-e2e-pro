@@ -11,7 +11,7 @@ export var randomRoleName = {
   roleName : `${(Math.random() + 1).toString(36).substring(2)}`
 }
 
-export const delay = (mills) => {
+const delay = (mills) => {
   let datetime1 = new Date().getTime();
   let datetime2 = datetime1 + mills;
   while(datetime1 < datetime2) {
@@ -92,12 +92,20 @@ export class HomePage {
       await this.page.getByTitle('close notification').click();
     }
     await this.page.getByRole('button', { name: 'Close' }).click();
+    await delay(3000);
   }
 
   async searchPatient(searchText: string) {
     await this.patientSearchIcon().click();
     await this.patientSearchBar().type(searchText);
     await this.page.getByRole('link', { name: `${patientFullName}` }).first().click();
+  }
+
+  async searchPatientId() {
+    await this.searchPatient(`${patientName.firstName + ' ' + patientName.givenName}`);
+    await this.page.getByRole('button', { name: 'Actions', exact: true }).click();
+    await this.page.getByRole('menuitem', { name: 'Edit patient details' }).click();
+    await delay(4000);
   }
 
   async startPatientVisit() {
@@ -186,7 +194,7 @@ export class HomePage {
     await this.page.getByRole('link', { name: 'SQL Editor' }).click();
     await this.page.locator('div').filter({ hasText: /^Select schema or type schema name$/ }).nth(1).click();
     await this.page.getByTitle('public').getByText('public').click();
-    await delay(3000);
+    await delay(4000);
   }
 
   async clearSQLEditor() {
