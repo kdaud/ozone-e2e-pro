@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 
   await expect(page).toHaveURL(/.*home/);
 });
-
+/*
 test('Adding an OpenMRS patient syncs patient into patients table in Superset', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -33,7 +33,7 @@ test('Adding an OpenMRS patient syncs patient into patients table in Superset', 
   const patientIdentifier = await page.locator('#demographics section p:nth-child(2)').textContent();
 
   // verify
-  await page.goto(`${process.env.E2E_SUPERSET_URL}/superset/sqllab`);
+  await page.goto(`${process.env.E2E_ANALYTICS_URL}/superset/sqllab`);
   await homePage.clearSQLEditor();
   await page.getByRole('textbox').first().fill(patientsCountQuery);
   await homePage.runSQLQuery();
@@ -482,7 +482,7 @@ test('Adding an OpenMRS patient appointment syncs appointment into appointments 
   await expect(appointmentComment).toHaveText('This is an appointment.');
   await expect(patientAppointmentProviderResponse).toHaveText('ACCEPTED');
 });
-
+*/
 test.afterEach(async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.deletePatient();

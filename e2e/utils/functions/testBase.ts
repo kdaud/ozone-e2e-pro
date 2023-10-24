@@ -7,8 +7,13 @@ export var patientName = {
 
 var patientFullName = '';
 
-export var randomRoleName = {
+export var randomOpenMRSRoleName = {
   roleName : `${(Math.random() + 1).toString(36).substring(2)}`
+}
+
+export var randomSupersetRoleName = {
+  roleName : `${(Math.random() + 1).toString(36).substring(2)}`,
+  updatedRoleName : `${(Math.random() + 1).toString(36).substring(2)}`
 }
 
 const delay = (mills) => {
@@ -42,7 +47,7 @@ export class HomePage {
   }
 
   async goToSuperset() {
-    await this.page.goto(`${process.env.E2E_SUPERSET_URL}`);
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}`);
   }
 
   async goToKeycloak() {
@@ -190,7 +195,8 @@ export class HomePage {
   }
 
   async selectDBSchema() {
-    await this.page.getByRole('button', { name: 'triangle-down SQL Lab' }).click();
+    await this.page.getByRole('button', { name: 'SQL' }).click();
+    await this.page.getByRole('button', { name: 'SQL Lab' }).click();
     await this.page.getByRole('link', { name: 'SQL Editor' }).click();
     await this.page.locator('div').filter({ hasText: /^Select schema or type schema name$/ }).nth(1).click();
     await this.page.getByTitle('public').getByText('public').click();
@@ -379,9 +385,9 @@ export class HomePage {
     await delay(5000);
   }
 
-  async addRole() {
+  async addOpenMRSRole() {
     await this.page.getByRole('link', { name: 'Add Role' }).click();
-    await this.page.locator('#role').fill(`${randomRoleName.roleName}`);
+    await this.page.locator('#role').fill(`${randomOpenMRSRoleName.roleName}`);
     await this.page.locator('textarea[name="description"]').fill('Role for e2e test');
     await this.page.getByLabel('Application: Edits Existing Encounters').check();
     await this.page.getByLabel('Application: Enters Vitals').check();
@@ -392,8 +398,8 @@ export class HomePage {
     await expect(this.page.getByText('Role saved')).toBeVisible();
   }
 
-  async updateRole() {
-    await this.page.getByRole('link', { name: `${randomRoleName.roleName}` }).click();
+  async updateOpenMRSRole() {
+    await this.page.getByRole('link', { name: `${randomOpenMRSRoleName.roleName}` }).click();
     await this.page.locator('textarea[name="description"]').clear();
     await this.page.locator('textarea[name="description"]').fill('Updated role description');
     await this.page.getByLabel('Application: Registers Patients').check();
@@ -402,16 +408,15 @@ export class HomePage {
     await expect(this.page.getByText('Role saved')).toBeVisible();
   }
 
-  async goToRoles() {
+  async goToClients() {
     await this.page.getByTestId('realmSelectorToggle').click();
     await this.page.getByRole('menuitem', { name: 'ozone' }).click();
     await this.page.getByRole('link', { name: 'Clients' }).click();
-    await this.page.getByRole('link', { name: 'openmrs', exact: true }).click();
-    await this.page.getByTestId('rolesTab').click();
+    await delay(2000);
   }
 
-  async unlinkInheritedRoles () {
-    await this.page.getByRole('link', { name: `${randomRoleName.roleName}` }).click();
+  async unlinkInheritedOpenMRSRoles () {
+    await this.page.getByRole('link', { name: `${randomOpenMRSRoleName.roleName}` }).click();
     await this.page.getByLabel('Application: Edits Existing Encounters').uncheck();
     await this.page.getByLabel('Application: Enters Vitals').uncheck();
     await this.page.getByLabel('Application: Records Allergies').uncheck();
@@ -421,8 +426,8 @@ export class HomePage {
     await expect(this.page.getByText('Role saved')).toBeVisible();
   }
 
-  async unlinkUpdatedInheritedRoles () {
-    await this.page.getByRole('link', { name: `${randomRoleName.roleName}` }).click();
+  async unlinkUpdatedInheritedOpenMRSRoles () {
+    await this.page.getByRole('link', { name: `${randomOpenMRSRoleName.roleName}` }).click();
     await this.page.getByLabel('Application: Edits Existing Encounters').uncheck();
     await this.page.getByLabel('Application: Enters Vitals').uncheck();
     await this.page.getByLabel('Application: Records Allergies').uncheck();
@@ -434,11 +439,64 @@ export class HomePage {
     await expect(this.page.getByText('Role saved')).toBeVisible();
   }
 
-  async deleteRole(){
-    await this.page.goto(`${process.env.E2E_BASE_URL}/openmrs/admin/users/role.list`);
-    await this.page.getByRole('row', { name: `${randomRoleName.roleName}` }).getByRole('checkbox').check();
+  async deleteOpenMRSRole(){
+    await this.page.getByRole('row', { name: `${randomOpenMRSRoleName.roleName}` }).getByRole('checkbox').check();
     await this.page.getByRole('button', { name: 'Delete Selected Roles' }).click();
-    await expect(this.page.getByText(`${randomRoleName.roleName} deleted`)).toBeVisible();
+    await expect(this.page.getByText(`${randomOpenMRSRoleName.roleName} deleted`)).toBeVisible();
+  }
+  async addSupersetRole() {
+    await this.page.getByRole('button', { name: 'triangle-down Settings' }).click();
+    await expect(this.page.getByText('List Roles')).toBeVisible();
+    await this.page.getByRole('link', { name: 'List Roles' }).click();
+    await this.page.getByRole('link', { name: 'Add' }).click();
+    await this.page.getByPlaceholder('Name').clear();
+    await this.page.getByPlaceholder('Name').fill(`${randomSupersetRoleName.roleName}`);
+    await this.page.getByPlaceholder('Select Value').click();
+    await this.page.getByRole('option', { name: 'can read on SavedQuery' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can read on Database' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can write on Database' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can read on Query' }).click();
+    await this.page.locator('button[type="submit"]').click();
+    await delay(2000);
+    await expect(this.page.getByText('Added Row')).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.roleName}`)).toBeVisible();
+  }
+
+  async updateSupersetRole() {
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list/`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('link').nth(1).click();
+    await delay(2000);
+    await this.page.getByPlaceholder('Name').clear();
+    await this.page.getByPlaceholder('Name').fill(`${randomSupersetRoleName.updatedRoleName}`);
+    await this.page.locator('button[type="submit"]').click();
+    await delay(2000);
+    await expect(this.page.getByText('Changed Row')).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.updatedRoleName}`)).toBeVisible();
+  }
+
+  async deleteSupersetRole(){
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('checkbox').check();
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('link').nth(2).click();
+    await delay(2000);
+    await this.page.getByRole('link', { name: 'OK' }).click();
+    await delay(2500);
+    await expect(this.page.getByText(`Deleted Row`)).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.roleName}`)).not.toBeVisible();
+  }
+
+  async deleteUpdatedSupersetRole(){
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.updatedRoleName}` }).getByRole('checkbox').check();
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.updatedRoleName}` }).getByRole('link').nth(2).click();
+    await delay(2000);
+    await this.page.getByRole('link', { name: 'OK' }).click();
+    await delay(2500);
+    await expect(this.page.getByText(`Deleted Row`)).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.updatedRoleName}`)).not.toBeVisible();
   }
 
 }
