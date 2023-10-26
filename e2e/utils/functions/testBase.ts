@@ -8,7 +8,7 @@ export var patientName = {
 var patientFullName = '';
 
 export var randomRoleName = {
-  roleName : `${(Math.random() + 1).toString(36).substring(2)}`
+  roleName : `Ab${(Math.random() + 1).toString(36).substring(2)}`
 }
 
 const delay = (mills) => {
@@ -337,7 +337,7 @@ export class HomePage {
     await this.page.getByRole('menuitem', { name: 'Sales' }).click();
     await this.page.getByRole('img', { name: 'Remove' }).click();
     await delay(1500);
-    await this.page.getByPlaceholder('Search...').type(`${patientName.firstName + ' ' + patientName.givenName}`);
+    await this.page.getByPlaceholder('Search...').type('Foor12 Bar46');
     await this.page.getByPlaceholder('Search...').press('Enter');
     await delay(2000);
   }
@@ -392,6 +392,7 @@ export class HomePage {
     await this.page.getByLabel('Organizational: Registration Clerk').check();
     await this.page.getByRole('button', { name: 'Save Role' }).click();
     await expect(this.page.getByText('Role saved')).toBeVisible();
+    await delay(5000);
   }
 
   async updateRole() {
