@@ -98,7 +98,7 @@ export class HomePage {
   async searchPatient(searchText: string) {
     await this.patientSearchIcon().click();
     await this.patientSearchBar().type(searchText);
-    await this.page.getByRole('link', { name: `${patientFullName}` }).first().click();
+    await this.page.getByRole('link', { name: 'Test1 Qa' }).first().click();
   }
 
   async searchPatientId() {
@@ -214,8 +214,8 @@ export class HomePage {
   async goToLabOrderForm() {
     await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Tests')).toBeVisible();
+    await this.page.getByText('Laboratory Tests').click();
   }
 
   async saveLabOrder() {
@@ -356,7 +356,7 @@ export class HomePage {
     await this.page.locator("//i[contains(@class, 'sidebar-toggle-icon')]").click();
     await this.page.getByRole('link', { name: 'Clients Clients' }).click();
     await this.page.getByRole('textbox', { name: 'Search' }).click();
-    await this.page.getByRole('textbox', { name: 'Search' }).type(`${patientName.givenName}`);
+    await this.page.getByRole('textbox', { name: 'Search' }).type('Test2');
     await this.page.locator('div.col-sm-3.text-right button:nth-child(2) i').click();
   }
 

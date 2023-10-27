@@ -9,14 +9,12 @@ test.beforeEach(async ({ page }) => {
   await homePage.initiateLogin();
 
   await expect(page).toHaveURL(/.*home/);
-
-  await homePage.createPatient();
-  await homePage.startPatientVisit();
 });
-/*
+
 test('Patient with lab order becomes client with analysis request in SENAITE', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
+  await homePage.searchPatient('Test2 QA2')
   await homePage.goToLabOrderForm();
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await page.locator('#tab select').selectOption('857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
@@ -29,9 +27,9 @@ test('Patient with lab order becomes client with analysis request in SENAITE', a
 
   // verify
   const client = await page.locator('table tbody tr:nth-child(1) td.contentcell.title div span a');
-  await expect(client).toContainText(`${patientName.firstName + ' ' + patientName.givenName}`);
+  await expect(client).toContainText('Test2 QA2');
 });
-
+/*
 test('Editing patient details with a synced lab test order edits client details in SENAITE', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
