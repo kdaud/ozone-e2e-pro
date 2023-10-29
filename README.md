@@ -2,7 +2,7 @@
 
 [![Ozone E2E Tests](https://github.com/ozone-his/ozone-e2e-pro/actions/workflows/e2e.yml/badge.svg)](https://github.com/ozone-his/ozone-e2e-pro/actions/workflows/e2e.yml)
 
-Welcome to Ozone Pro test suite that uses [Playwright](https://playwright.dev)
+Welcome to Ozone FOSS test suite that uses [Playwright](https://playwright.dev)
 framework. 
 
 - [Setup Steps](#setup-steps)
@@ -29,6 +29,7 @@ Navigate into the project
 ```sh
 cd ozone-e2e-pro
 ```
+Pull 'master' branch from upstream and checkout it out.
 
 Install dependencies
 ```sh
@@ -42,18 +43,11 @@ npx playwright test
 ```
 ## Configurations
 
-This is underdevelopement/WIP. At the moment, there exists a git-shared
-`.env` file which can be used for configuring certain test attributes.
-
-By default, the test suite will run against the Ozone dev server.
-You can override this by changing the `E2E_BASE_URL` environment variables beforehand:
-
-```sh
-# Ex: Set the server URL here
-export E2E_BASE_URL=https://ozone-dev.mekomsolutions.net
-```
+Set the server urls for O3, Odoo and SENAITE within the git-shared
+`.env` file used for configuring server attributes.
 
 ## Project Structure 
+
 The project uses the Playwright test runner and,
 generally, follows a very simple project structure:
 
@@ -65,10 +59,6 @@ e2e
 |   ^ Contains utilities needed to setup and tear down 
 |     tests as well as methods required by the tests to run
 ```
-
-## Guide for writing the tests
-
-When writing a new test case, you need to create a new spec in `./e2e/tests`
 
 ## Github Action integration
 The e2e.yml workflow is made up of one job that is triggered by PRs, and on a push.
