@@ -22,17 +22,17 @@ test('Patient with lab order becomes customer in Odoo', async ({ page }) => {
   await page.locator('#tab select').selectOption('857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
   await homePage.saveLabOrder();
   await homePage.goToOdoo();
- await expect(page).toHaveURL(/.*web/);
+  await expect(page).toHaveURL(/.*web/);
 
   // replay
   await homePage.searchCustomerInOdoo();
 
   // verify
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
 
-  const quotation =
+  let quotation =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_badge_cell.o_readonly_modifier span").textContent();
   await expect(quotation?.includes("Quotation")).toBeTruthy();
 });
@@ -47,11 +47,11 @@ test('Editing patient details with a synced lab order edits the corresponding cu
   await homePage.goToOdoo();
   await expect(page).toHaveURL(/.*web/);
   await homePage.searchCustomerInOdoo();
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
 
-  const quotation =
+  let quotation =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_badge_cell.o_readonly_modifier span").textContent();
   await expect(quotation?.includes("Quotation")).toBeTruthy();
 
@@ -63,7 +63,7 @@ test('Editing patient details with a synced lab order edits the corresponding cu
   // verify
   await page.goto(`${process.env.E2E_ODOO_URL}`);
   await homePage.searchCustomerInOdoo();
-  const updatedCustomer =
+  let updatedCustomer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier");
 
   await expect(updatedCustomer).toHaveText(`${patientName.updatedFirstName}` + ' ' + `${patientName.givenName}`);
@@ -81,11 +81,11 @@ test('Patient with drug order becomes customer in Odoo', async ({ page }) => {
   await homePage.searchCustomerInOdoo();
 
   // verify
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
 
-  const quotation =
+  let quotation =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_badge_cell.o_readonly_modifier span").textContent();
   await expect(quotation?.includes("Quotation")).toBeTruthy();
 });
@@ -98,11 +98,11 @@ test('Editing patient details with a synced drug order edits corresponding custo
   await expect(page).toHaveURL(/.*web/);
   await homePage.searchCustomerInOdoo();
 
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
 
-  const quotation =
+  let quotation =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_badge_cell.o_readonly_modifier span").textContent();
   await expect(quotation?.includes("Quotation")).toBeTruthy();
 
@@ -114,7 +114,7 @@ test('Editing patient details with a synced drug order edits corresponding custo
   // verify
   await page.goto(`${process.env.E2E_ODOO_URL}`);
   await homePage.searchCustomerInOdoo();
-  const updatedCustomer =
+  let updatedCustomer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier");
 
   await expect(updatedCustomer).toHaveText(`${patientName.updatedFirstName}` + ' ' + `${patientName.givenName }`);
@@ -129,11 +129,11 @@ test('Revising a synced drug order edits corresponding quotation line in Odoo', 
   await expect(page).toHaveURL(/.*web/);
   await homePage.searchCustomerInOdoo();
 
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
   await page.getByRole('cell', { name: `${patientName.firstName + ' ' + patientName.givenName}` }).click();
-  const drugOrderItem = await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_text.o_section_and_note_text_cell.o_required_modifier span");
+  let drugOrderItem = await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_text.o_section_and_note_text_cell.o_required_modifier span");
 
   await expect(drugOrderItem).toContainText('4.0 Tablet');
   await expect(drugOrderItem).toContainText('Twice daily - 5 Days');
@@ -159,14 +159,14 @@ test('Discontinuing a synced drug order cancels corresponding quotation line in 
   await expect(page).toHaveURL(/.*web/);
   await homePage.searchCustomerInOdoo();
 
-  const customer =
+  let customer =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_readonly_modifier.o_required_modifier").textContent();
   await expect(customer?.includes(`${patientName.firstName + ' ' + patientName.givenName}`)).toBeTruthy();
-  const quotation =
+  let quotation =
   await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_badge_cell.o_readonly_modifier span");
   await expect(quotation).toHaveText('Quotation');
   await page.getByRole('cell', { name: `${patientName.firstName + ' ' + patientName.givenName}` }).click();
-  const drugOrderItem = await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_product_configurator_cell.o_required_modifier span span");
+  let drugOrderItem = await page.locator("table tbody tr:nth-child(1) td.o_data_cell.o_field_cell.o_list_many2one.o_product_configurator_cell.o_required_modifier span span");
   await expect(drugOrderItem).toHaveText('Aspirin 325mg');
 
   // replay
