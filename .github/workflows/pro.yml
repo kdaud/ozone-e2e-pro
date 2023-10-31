@@ -1,4 +1,4 @@
-name: Ozone E2E Tests
+name: Ozone Pro E2E Tests
 
 on:
   schedule:
@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Run E2E tests
-        run: npm run e2eTests
+        run: npm run e2eProTests
 
       - name: Upload report
         uses: actions/upload-artifact@v3
@@ -76,7 +76,7 @@ jobs:
       - name: Run E2E tests
         id: jobStatusPretty
         run: |
-          npm run e2eTests
+          npm run e2eProTests
 
           if [[ ${{ job.status }} == "success" ]]; then
             jobStatusPretty="✅ Passing"

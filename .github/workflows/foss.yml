@@ -1,0 +1,65 @@
+name: Ozone FOSS E2E Tests
+
+on:
+  schedule:
+    - cron: '0 0 * * 1,3,5'
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+    inputs:
+      o3_url:
+        description: 'O3 URL'
+        required: true
+        default: 'o3 demo'
+      odoo_url:
+        description: 'Odoo URL'
+        required: true
+        default: 'Odoo demo'
+      senaite_url:
+        description: 'SENAITE URL'
+        required: true
+        default: 'Senaite demo'
+jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set Flutter version
+        uses: subosito/flutter-action@v2.2.0
+        with:
+          o3_url: '${{ github.event.inputs.o3_url }}'
+          odoo_url: '${{ github.event.inputs.odoo_url }}'
+          senaite_url: '${{ github.event.inputs.senaite_url }}'
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run E2E tests
+        run: npm run e2eFossTests
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
