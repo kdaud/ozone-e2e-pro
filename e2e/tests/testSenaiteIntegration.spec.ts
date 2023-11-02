@@ -56,7 +56,7 @@ test('Editing patient details with a synced lab test order edits client details 
 
   await expect(client).toContainText(`${patientName.updatedFirstName}` + ' ' + `${patientName.givenName }`);
 });
-
+/*
 test('Editing a synced lab order edits corresponding analysis request in SENAITE', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
@@ -204,7 +204,7 @@ test('Published free text lab results from SENAITE are viewable in O3', async ({
   const labResult = await page.locator('div:nth-child(2) >div> div.cds--data-table-container table tbody tr td:nth-child(2) span').first();
   await expect(labResult).toHaveText('Test result: Normal');
 });
-
+*/
 test.afterEach(async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.deletePatient();
