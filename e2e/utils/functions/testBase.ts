@@ -12,6 +12,11 @@ export var randomOpenMRSRoleName = {
   roleName : `Ab${(Math.random() + 1).toString(36).substring(2)}`
 }
 
+export var randomSupersetRoleName = {
+  roleName : `Ac${(Math.random() + 1).toString(36).substring(2)}`,
+  updatedRoleName : `Ab${(Math.random() + 1).toString(36).substring(2)}`
+}
+
 const delay = (mills) => {
   let datetime1 = new Date().getTime();
   let datetime2 = datetime1 + mills;
@@ -431,6 +436,61 @@ export class HomePage {
     await expect(this.page.getByText(`${randomOpenMRSRoleName.roleName} deleted`)).toBeVisible();
     await delay(1500);
     await this.page.getByRole('link', { name: 'Log out' }).click();
+  }
+
+    async addSupersetRole() {
+    await this.page.getByRole('button', { name: 'triangle-down Settings' }).click();
+    await expect(this.page.getByText('List Roles')).toBeVisible();
+    await this.page.getByRole('link', { name: 'List Roles' }).click();
+    await this.page.getByRole('link', { name: 'Add' }).click();
+    await this.page.getByPlaceholder('Name').clear();
+    await this.page.getByPlaceholder('Name').fill(`${randomSupersetRoleName.roleName}`);
+    await this.page.getByPlaceholder('Select Value').click();
+    await this.page.getByRole('option', { name: 'can read on SavedQuery' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can read on Database' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can write on Database' }).click();
+    await this.page.getByRole('searchbox').click();
+    await this.page.getByRole('option', { name: 'can read on Query' }).click();
+    await this.page.locator('button[type="submit"]').click();
+    await delay(2000);
+    await expect(this.page.getByText('Added Row')).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.roleName}`)).toBeVisible();
+  }
+
+  async updateSupersetRole() {
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list/`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('link').nth(1).click();
+    await delay(2000);
+    await this.page.getByPlaceholder('Name').clear();
+    await this.page.getByPlaceholder('Name').fill(`${randomSupersetRoleName.updatedRoleName}`);
+    await this.page.locator('button[type="submit"]').click();
+    await delay(2000);
+    await expect(this.page.getByText('Changed Row')).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.updatedRoleName}`)).toBeVisible();
+  }
+
+  async deleteSupersetRole(){
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('checkbox').check();
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.roleName}` }).getByRole('link').nth(2).click();
+    await delay(2000);
+    await this.page.getByRole('link', { name: 'OK' }).click();
+    await delay(2500);
+    await expect(this.page.getByText(`Deleted Row`)).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.roleName}`)).not.toBeVisible();
+  }
+
+  async deleteUpdatedSupersetRole(){
+    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}/roles/list`);
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.updatedRoleName}` }).getByRole('checkbox').check();
+    await this.page.getByRole('row', { name: `${randomSupersetRoleName.updatedRoleName}` }).getByRole('link').nth(2).click();
+    await delay(2000);
+    await this.page.getByRole('link', { name: 'OK' }).click();
+    await delay(2500);
+    await expect(this.page.getByText(`Deleted Row`)).toBeVisible();
+    await expect(this.page.getByText(`${randomSupersetRoleName.updatedRoleName}`)).not.toBeVisible();
   }
 
 }
