@@ -42,7 +42,7 @@ npx playwright test
 ```
 ## Configurations
 
-This is underdevelopement. At the moment, there exists a git-shared
+This is underdevelopement/WIP. At the moment, there exists a git-shared
 `.env` file which can be used for configuring certain test attributes.
 
 By default, the test suite will run against the Ozone dev server.
