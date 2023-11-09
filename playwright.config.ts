@@ -20,10 +20,12 @@ const config: PlaywrightTestConfig = {
   },
   projects: [
     {
-      name: 'webkit',
+      name: 'chromium',
       use: {
-        ...devices['Desktop Safari'],
-        viewport: {width: 1920, height: 1080}
+        ...devices['Desktop Chromium'],
+        viewport: {width: 1920, height: 1080},
+        video: 'on',
+        screenshot: 'only-on-failure'
       },
     },
   ],
