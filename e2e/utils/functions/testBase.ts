@@ -28,6 +28,8 @@ export class HomePage {
 
   async initiateLogin() {
     await this.page.goto(`${process.env.E2E_BASE_URL}`);
+    console.log('O3 URL: ' + `${process.env.E2E_BASE_URL}`);
+
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
       await this.page.locator('#username').fill(`${process.env.E2E_USER_ADMIN_USERNAME}`);
       await this.page.getByRole('button', { name: 'Continue' }).click();
@@ -65,6 +67,7 @@ export class HomePage {
 
   async goToOdoo() {
     await this.page.goto(`${process.env.E2E_ODOO_URL}`);
+    console.log('ODOO URL: ' + `${process.env.E2E_ODOO_URL}`);
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
       await this.page.getByRole('link', { name: 'Login with Single Sign-On' }).click();
     } else {

@@ -1,0 +1,61 @@
+name: Ozone PRO E2E Test Environment
+
+on:
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Choose test environment'
+        type: environment
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run E2E tests
+        # env:
+        #   E2E_BASE_URL: 'https://${{ github.event.inputs.environment }}.mekomsolutions.net'
+
+        run: |
+          if [ "${{ ${{ github.event.inputs.environment }} }}" == "qa" ]; then
+          env: 
+            E2E_BASE_URL: 'https://ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
+            E2E_ODOO_URL: 'https://erp.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
+            E2E_SENAITE_URL: 'https://lims.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
+            E2E_KEYCLOAK_URL: 'https://auth.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
+            E2E_ANALYTICS_URL: 'https://analytics.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
+          else
+          fi
+
+         npm run proE2ETests
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
