@@ -27,12 +27,33 @@ export class HomePage {
   readonly patientSearchBar = () => this.page.locator('[data-testid="patientSearchBar"]');
 
   async initiateLogin() {
-    if (`${process.env.E2E_BASE_URL}` == 'qa') {
-      `${process.env.E2E_BASE_URL}` == 'https://ozone-qa.mekomsolutions.net'
+    if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'qa') {
+      await this.page.goto(`${process.env.E2E_BASE_QA_URL}`);
+      console.log('O3 URL: ' + `${process.env.E2E_BASE_QA_URL}`);
+    } else if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'demo') {
+      await this.page.goto(`${process.env.E2E_BASE_DEMO_URL}`);
+      console.log('O3 URL: ' + `${process.env.E2E_BASE_DEMO_URL}`);
+    } else {
       await this.page.goto(`${process.env.E2E_BASE_URL}`);
+      console.log('O3 URL: ' + `${process.env.E2E_BASE_URL}`);
     }
-    console.log('O3 URL: ' + `${process.env.E2E_BASE_URL}`);
+/*
+    switch (true) {
+      case `${process.env.E2E_TEST_ENVIRONMENT}` == 'demo':
+        await this.page.goto(`${process.env.E2E_BASE_DEMO_URL}`);
+        console.log('O3 URL: ' + `${process.env.E2E_BASE_DEMO_URL}`);
+        break;
 
+      case `${process.env.E2E_TEST_ENVIRONMENT}` == 'qa':
+        await this.page.goto(`${process.env.E2E_BASE_QA_URL}`);
+        console.log('O3 URL: ' + `${process.env.E2E_BASE_QA_URL}`);
+        break;
+
+      default:
+        await this.page.goto(`${process.env.E2E_BASE_URL}`);
+        console.log('O3 URL: ' + `${process.env.E2E_BASE_URL}`);
+    }
+*/
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
       await this.page.locator('#username').fill(`${process.env.E2E_USER_ADMIN_USERNAME}`);
       await this.page.getByRole('button', { name: 'Continue' }).click();
@@ -57,11 +78,30 @@ export class HomePage {
   }
 
   async goToSuperset() {
-    await this.page.goto(`${process.env.E2E_ANALYTICS_URL}`);
+    if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'qa') {
+      await this.page.goto(`${process.env.E2E_ANALYTICS_QA_URL}`);
+      console.log('SUPERSET URL: ' + `${process.env.E2E_ANALYTICS_QA_URL}`);
+    } else if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'demo') {
+      await this.page.goto(`${process.env.E2E_ANALYTICS_DEMO_URL}`);
+      console.log('SUPERSET URL: ' + `${process.env.E2E_ANALYTICS_DEMO_URL}`);
+    } else {
+      await this.page.goto(`${process.env.E2E_ANALYTICS_URL}`);
+      console.log('SUPERSET URL: ' + `${process.env.E2E_ANALYTICS_URL}`);
+    }
   }
 
   async goToKeycloak() {
-    await this.page.goto(`${process.env.E2E_KEYCLOAK_URL}/admin/master/console`);
+    if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'qa') {
+      await this.page.goto(`${process.env.E2E_KEYCLOAK_QA_URL}/admin/master/console`);
+      console.log('KEYCLOAK URL: ' + `${process.env.E2E_KEYCLOAK_QA_URL}/admin/master/console`);
+    } else if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'demo') {
+      await this.page.goto(`${process.env.E2E_KEYCLOAK_DEMO_URL}/admin/master/console`);
+      console.log('KEYCLOAK URL: ' + `${process.env.E2E_KEYCLOAK_DEMO_URL}/admin/master/console`);
+    } else {
+      await this.page.goto(`${process.env.E2E_KEYCLOAK_URL}/admin/master/console}`);
+      console.log('KEYCLOAK URL: ' + `${process.env.E2E_KEYCLOAK_URL}/admin/master/console}`);
+    }
+
     await this.page.getByLabel('Username or email').fill('admin');
     await this.page.getByLabel('Password').fill('password');
     await this.page.getByRole('button', { name: 'Sign In' }).click();
@@ -69,11 +109,33 @@ export class HomePage {
   }
 
   async goToOdoo() {
-    if (`${process.env.E2E_BASE_URL}` == 'qa') {
-      `${process.env.E2E_ODOO_URL}` == 'https://erp.ozone-qa.mekomsolutions.net'
+    if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'qa') {
+      await this.page.goto(`${process.env.E2E_ODOO_QA_URL}`);
+      console.log('ODOO URL: ' + `${process.env.E2E_ODOO_QA_URL}`);
+    } else if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'demo') {
+      await this.page.goto(`${process.env.E2E_ODOO_DEMO_URL}`);
+      console.log('ODOO URL: ' + `${process.env.E2E_ODOO_DEMO_URL}`);
+    } else {
       await this.page.goto(`${process.env.E2E_ODOO_URL}`);
+      console.log('ODOO URL: ' + `${process.env.E2E_ODOO_URL}`);
     }
-    console.log('ODOO URL: ' + `${process.env.E2E_ODOO_URL}`);
+/*
+    switch (true) {
+      case `${process.env.E2E_TEST_ENVIRONMENT}` == 'demo':
+        await this.page.goto(`${process.env.E2E_ODOO_DEMO_URL}`);
+        console.log('ODOO URL: ' + `${process.env.E2E_ODOO_DEMO_URL}`);
+        break;
+
+      case `${process.env.E2E_TEST_ENVIRONMENT}` == 'qa':
+        await this.page.goto(`${process.env.E2E_ODOO_QA_URL}`);
+        console.log('ODOO URL: ' + `${process.env.E2E_ODOO_QA_URL}`);
+        break;
+
+      default:
+        await this.page.goto(`${process.env.E2E_ODOO_URL}`);
+        console.log('ODOO URL: ' + `${process.env.E2E_ODOO_URL}`);
+    }
+*/
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
       await this.page.getByRole('link', { name: 'Login with Single Sign-On' }).click();
     } else {
@@ -87,7 +149,17 @@ export class HomePage {
   }
 
   async goToSENAITE() {
-    await this.page.goto(`${process.env.E2E_SENAITE_URL}`);
+    if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'qa') {
+      await this.page.goto(`${process.env.E2E_SENAITE_QA_URL}`);
+      console.log('SENAITE URL: ' + `${process.env.E2E_SENAITE_QA_URL}`);
+    } else if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'demo') {
+      await this.page.goto(`${process.env.E2E_SENAITE_DEMO_URL}`);
+      console.log('SENAITE URL: ' + `${process.env.E2E_SENAITE_DEMO_URL}`);
+    } else {
+      await this.page.goto(`${process.env.E2E_SENAITE_URL}`);
+      console.log('SENAITE URL: ' + `${process.env.E2E_SENAITE_URL}`);
+    }
+
     if (!(`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true')) {
       await delay(3000);
       await this.page.locator('#__ac_name').fill(`${process.env.FOSS_E2E_USER_ADMIN_USERNAME}`);
@@ -252,8 +324,8 @@ export class HomePage {
   async goToLabOrderForm() {
     await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Orders')).toBeVisible();
+    await this.page.getByText('Laboratory Orders').click();
   }
 
   async saveLabOrder() {

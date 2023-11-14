@@ -37,11 +37,7 @@ jobs:
 
       - name: Run E2E tests
         env:
-          E2E_BASE_URL: '${{ github.event.inputs.environment }}'
-          E2E_ODOO_URL: '${{ github.event.inputs.environment }}'
-          E2E_SENAITE_URL: '${{ github.event.inputs.environment }}'
-          E2E_KEYCLOAK_URL: '${{ github.event.inputs.environment }}'
-          E2E_ANALYTICS_URL: '${{ github.event.inputs.environment }}'
+          E2E_TEST_ENVIRONMENT: '${{ github.event.inputs.environment }}'
         run: npm run proE2ETests
 
       - name: Upload report
