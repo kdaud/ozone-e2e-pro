@@ -27,7 +27,10 @@ export class HomePage {
   readonly patientSearchBar = () => this.page.locator('[data-testid="patientSearchBar"]');
 
   async initiateLogin() {
-    await this.page.goto(`${process.env.E2E_BASE_URL}`);
+    if (`${process.env.E2E_BASE_URL}` == 'qa') {
+      `${process.env.E2E_BASE_URL}` == 'https://ozone-qa.mekomsolutions.net'
+      await this.page.goto(`${process.env.E2E_BASE_URL}`);
+    }
     console.log('O3 URL: ' + `${process.env.E2E_BASE_URL}`);
 
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
@@ -66,7 +69,10 @@ export class HomePage {
   }
 
   async goToOdoo() {
-    await this.page.goto(`${process.env.E2E_ODOO_URL}`);
+    if (`${process.env.E2E_BASE_URL}` == 'qa') {
+      `${process.env.E2E_ODOO_URL}` == 'https://erp.ozone-qa.mekomsolutions.net'
+      await this.page.goto(`${process.env.E2E_ODOO_URL}`);
+    }
     console.log('ODOO URL: ' + `${process.env.E2E_ODOO_URL}`);
     if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true') {
       await this.page.getByRole('link', { name: 'Login with Single Sign-On' }).click();

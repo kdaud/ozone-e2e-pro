@@ -36,21 +36,13 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Run E2E tests
-        # env:
-        #   E2E_BASE_URL: 'https://${{ github.event.inputs.environment }}.mekomsolutions.net'
-
-        run: |
-          if [ "${{ ${{ github.event.inputs.environment }} }}" == "qa" ]; then
-          env: 
-            E2E_BASE_URL: 'https://ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
-            E2E_ODOO_URL: 'https://erp.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
-            E2E_SENAITE_URL: 'https://lims.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
-            E2E_KEYCLOAK_URL: 'https://auth.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
-            E2E_ANALYTICS_URL: 'https://analytics.ozone-${{ github.event.inputs.environment }}.mekomsolutions.net'
-          else
-          fi
-
-         npm run proE2ETests
+        env:
+          E2E_BASE_URL: '${{ github.event.inputs.environment }}'
+          E2E_ODOO_URL: '${{ github.event.inputs.environment }}'
+          E2E_SENAITE_URL: '${{ github.event.inputs.environment }}'
+          E2E_KEYCLOAK_URL: '${{ github.event.inputs.environment }}'
+          E2E_ANALYTICS_URL: '${{ github.event.inputs.environment }}'
+        run: npm run proE2ETests
 
       - name: Upload report
         uses: actions/upload-artifact@v3
