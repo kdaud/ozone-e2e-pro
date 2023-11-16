@@ -6,8 +6,13 @@ on:
     inputs:
       environment:
         description: 'Choose test environment'
-        type: environment
         required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - qa
+          - demo
 jobs:
   build:
     runs-on: ubuntu-latest
