@@ -51,7 +51,7 @@ export class HomePage {
       await this.page.locator('button[type="submit"]').click();
     }
     if (`${process.env.E2E_TEST_ENVIRONMENT}` == 'dev' && await this.page.locator('label').filter({ hasText: 'Remember my location for future logins' }).isChecked()) {
-      await delay(4000);
+      await delay(5000);
       await this.page.getByLabel('Users').click();
       await this.page.getByRole('button', { name: 'Change' }).click();
       await this.page.locator('label').filter({ hasText: 'Remember my location for future logins' }).uncheck();
