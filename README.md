@@ -1,4 +1,4 @@
-# Ozone E2E Test Suite
+# Ozone E2E Test Suite.
 
 [![Ozone E2E Tests](https://github.com/ozone-his/ozone-e2e-pro/actions/workflows/pro.yml/badge.svg)](https://github.com/ozone-his/ozone-e2e-pro/actions/workflows/pro.yml)
 
