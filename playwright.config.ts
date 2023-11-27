@@ -23,7 +23,9 @@ const config: PlaywrightTestConfig = {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
-        viewport: {width: 1920, height: 1080}
+        viewport: {width: 1920, height: 1080},
+        video: 'on',
+        screenshot: 'only-on-failure'
       },
     },
   ],
