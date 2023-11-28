@@ -241,7 +241,8 @@ export class HomePage {
   }
 
   async goToLabOrderForm() {
-    await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
+    //await this.page.locator('div').filter({ hasText: /^Form$/ }).getByRole('button').click();
+    await this.page.getByLabel('Clinical forms').click();
     await delay(3000);
     await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
     await this.page.getByText('Laboratory Test Orders').click();
@@ -250,7 +251,7 @@ export class HomePage {
   async saveLabOrder() {
     await this.page.getByRole('button', { name: 'Save and close' }).click();
     await expect(this.page.getByText('Lab order(s) generated')).toBeVisible();
-    await this.page.getByRole('button', { name: 'Close' }).click();
+    await this.page.getByRole('button', { name: 'Close', exact: true }).click();
     await delay(5000);
   }
 
