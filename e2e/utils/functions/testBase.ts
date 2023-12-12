@@ -59,6 +59,7 @@ export class HomePage {
     }
     await delay(5000);
     await this.expectAllButtonsToBePresent();
+    console.log('The server URL is: ' + `${E2E_BASE_URL}` );
   }
 
   async goToSuperset() {
