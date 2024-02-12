@@ -49,14 +49,14 @@ export class HomePage {
       await this.page.waitForTimeout(1000);
       await this.page.locator('button[type="submit"]').click();
     }
-    if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true' && !(await this.page.locator('#checkbox').isChecked())
-    && await this.page.locator('input[role="searchbox"]').isVisible()) {
+    // if (`${process.env.E2E_RUNNING_ON_OZONE_PRO}` == 'true' && !(await this.page.locator('#checkbox').isChecked())
+    // && await this.page.locator('input[role="searchbox"]').isVisible()) {
+    //   await this.page.locator('label').filter({ hasText: 'Inpatient Ward' }).locator('span').first().click();
+    //   await this.page.getByRole('button', { name: 'Confirm' }).click();
+    // } else {
       await this.page.locator('label').filter({ hasText: 'Inpatient Ward' }).locator('span').first().click();
       await this.page.getByRole('button', { name: 'Confirm' }).click();
-    } else {
-      await this.page.locator('label').filter({ hasText: 'Inpatient Ward' }).locator('span').first().click();
-      await this.page.getByRole('button', { name: 'Confirm' }).click();
-    }
+   // }
     await delay(5000);
     await this.expectAllButtonsToBePresent();
   }
@@ -161,7 +161,10 @@ export class HomePage {
     await this.page.locator('label').filter({ hasText: 'Facility Visit' }).locator('span').first().click();
     await this.page.locator('form').getByRole('button', { name: 'Start a visit' }).click();
     await expect(this.page.getByText('Facility Visit started successfully')).toBeVisible();
-    await delay(4000);
+    // if (await this.page.getByTitle('close notification').first().isVisible()) {
+    //   await this.page.getByTitle('close notification').first().click();
+    // }
+    await delay(9000);
   }
 
   async endPatientVisit() {
@@ -216,7 +219,7 @@ export class HomePage {
   async addPatientAppointment() {
     await this.page.getByRole('link', { name: 'Appointments' }).click();
     await this.page.getByRole('button', { name: 'Add', exact: true }).click();
-    await this.page.getByLabel('Select a service').selectOption('General Medicine service');
+    await this.page.getByLabel('Select service').selectOption('General Medicine service');
     await this.page.getByLabel('Select the type of appointment').selectOption('WalkIn');
     await this.page.locator('#duration').clear();
     await this.page.locator('#duration').fill('40');
@@ -255,10 +258,10 @@ export class HomePage {
   }
 
   async goToLabOrderForm() {
-    await this.page.getByLabel('Clinical forms').click();
+    await this.page.locator('div').filter({ hasText: /^Form$/ }).getByLabel('Search Patient').click();
     await delay(3000);
-    await expect(this.page.getByText('Laboratory Test Orders')).toBeVisible();
-    await this.page.getByText('Laboratory Test Orders').click();
+    await expect(this.page.getByText('Laboratory Tests')).toBeVisible();
+    await this.page.getByText('Laboratory Tests').click();
   }
 
   async saveLabOrder() {
@@ -322,13 +325,13 @@ export class HomePage {
   }
 
   async makeDrugOrder() {
-    await this.page.getByLabel('Order basket', { exact: true }).click();
+    await this.page.getByLabel('Medications').click();
     await delay(3000);
-    await this.page.getByRole('button', { name: 'Add', exact: true }).nth(0).click();
+    // await this.page.getByRole('button', { name: 'Add', exact: true }).nth(0).click();
 
     await delay(2000);
     await this.page.getByPlaceholder('Search for a drug or orderset (e.g. "Aspirin")').fill('Aspirin 325mg');
-    await this.page.getByRole('button', { name: 'Order form' }).click();
+    // await this.page.getByRole('button', { name: 'Order form' }).click();
     await delay(4000);
     await this.page.getByPlaceholder('Dose').fill('4');
     await this.page.getByRole('button', { name: 'Open', exact: true }).nth(1).click();
