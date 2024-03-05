@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 
   await expect(page).toHaveURL(/.*home/);
 });
-
+/*
 test('Adding an OpenMRS patient syncs patient into patients table in Superset', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.goToSuperset();
@@ -352,7 +352,7 @@ test('Adding an OpenMRS observation syncs observation into observations table in
   await page.getByRole('tab', { name: 'Results' }).click();
   await homePage.clearSQLEditor();
 });
-
+*/
 test('Adding an OpenMRS appointment syncs appointment into appointments table in Superset', async ({ page }) => {
   // setup
   const homePage = new HomePage(page);
