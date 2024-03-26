@@ -1,6 +1,6 @@
 {
   "name": "ozone-e2e",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-SNAPSHOT",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,12 @@
     "publish": "npm publish"
   },
   "publishConfig": {
-    "registry": "https://nexus.mekomsolutions.net/repository/mks-npm/"
+    "registry": "https://nexus.mekomsolutions.net/repository/mks-npm/",
+    "name": "@ozone-his/ozone-e2e",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ozone-his/ozone-e2e.git"
+    }
   },
   "keywords": [],
   "author": "",

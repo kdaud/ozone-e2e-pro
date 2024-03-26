@@ -7,20 +7,18 @@ on:
   release:
     types:
       - created
-  workflow_dispatch:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm adduser --auth-type=legacy --registry=https://nexus.mekomsolutions.net/repository/mks-npm/
-        env:
-          USERNAME: ${{ secrets.NPM_USERNAME }}
-          PASSWORD: ${{ secrets.NPM_TOKEN }}
-      - run: yarn publish
+          node-version: '20.x'
+          registry-url: 'https://nexus.mekomsolutions.net/repository/mks-npm'
+
+      - run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
